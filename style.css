@@ -3277,3 +3277,35 @@ button {
     }
 
 }
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.problem-card,
+.step-card,
+.feature-card,
+.industry-card,
+.pricing-card {
+
+    opacity: 0;
+
+    transform:
+        translateY(20px);
+
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+}
+
+
+.problem-card.visible,
+.step-card.visible,
+.feature-card.visible,
+.industry-card.visible,
+.pricing-card.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
