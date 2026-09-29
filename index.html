@@ -1227,7 +1227,7 @@
             <h4>Contact</h4>
 
             <a href="tel:+16504480279">
-                +1 (650) 448-0279
+                +91 8065354620
             </a>
 
             <a href="#demo">
@@ -1254,8 +1254,110 @@
 
 </footer>
 
+<!-- =========================================
+     CALLSATHI AI DEMO CALL MODAL
+     ========================================= -->
+
+<div
+    class="call-modal-overlay"
+    id="callModal"
+    aria-hidden="true"
+>
+    <div
+        class="call-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="callModalTitle"
+    >
+
+        <!-- Close Button -->
+        <button
+            type="button"
+            class="call-modal-close"
+            id="callModalClose"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+        <!-- Icon -->
+        <div class="call-modal-icon">
+            ☎
+        </div>
+
+        <!-- Label -->
+        <div class="call-modal-label">
+            LIVE AI DEMO
+        </div>
+
+        <!-- Heading -->
+        <h2 id="callModalTitle">
+            Talk to CallSathi AI
+        </h2>
+
+        <!-- Description -->
+        <p class="call-modal-description">
+            Enter your phone number and our AI receptionist
+            will call you automatically.
+        </p>
+
+        <div class="call-modal-caller">
+            You will receive the call from
+            <strong>+91 8065354620</strong>
+        </div>
+
+        <!-- Form -->
+        <form id="demoCallForm">
+
+            <label for="demoPhone">
+                Your phone number
+            </label>
+
+            <input
+                type="tel"
+                id="demoPhone"
+                name="phone"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="+91 9876543210"
+                required
+            >
+
+            <div class="call-modal-hint">
+                Enter your mobile number. Indian 10-digit numbers
+                can be entered without +91.
+            </div>
+
+            <!-- Submit -->
+            <button
+                type="submit"
+                class="call-modal-submit"
+                id="callNowButton"
+            >
+                <span>☎</span>
+                <span id="callButtonText">Call Me Now</span>
+            </button>
+
+            <!-- Status -->
+            <div
+                class="demo-call-status"
+                id="demoCallStatus"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+        <!-- Privacy -->
+        <div class="call-modal-privacy">
+            Your number is used only to place this demo call.
+        </div>
+
+    </div>
+</div>
 
 <script src="script.js"></script>
 
 </body>
+    
 </html>
