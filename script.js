@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* =====================================================
+    /* =========================================
        MOBILE NAVIGATION
-    ===================================================== */
+       ========================================= */
 
     const menuToggle = document.getElementById("menuToggle");
     const mainNav = document.getElementById("mainNav");
@@ -13,24 +13,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             mainNav.classList.toggle("active");
 
-            const isOpen =
-                mainNav.classList.contains("active");
+            const isOpen = mainNav.classList.contains("active");
 
             menuToggle.setAttribute(
                 "aria-expanded",
                 isOpen ? "true" : "false"
             );
 
-            menuToggle.innerHTML =
-                isOpen ? "✕" : "☰";
-
+            menuToggle.innerHTML = isOpen ? "✕" : "☰";
         });
 
-
-        /* Close mobile menu when a link is clicked */
-
-        const navLinks =
-            mainNav.querySelectorAll("a");
+        const navLinks = mainNav.querySelectorAll("a");
 
         navLinks.forEach(function (link) {
 
@@ -44,13 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
                 menuToggle.innerHTML = "☰";
-
             });
 
         });
-
-
-        /* Close menu when clicking outside */
 
         document.addEventListener("click", function (event) {
 
@@ -74,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
                 menuToggle.innerHTML = "☰";
-
             }
 
         });
@@ -82,29 +70,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
+    /* =========================================
        CURRENT YEAR
-    ===================================================== */
+       ========================================= */
 
-    const yearElement =
-        document.getElementById("year");
+    const yearElement = document.getElementById("year");
 
     if (yearElement) {
-
         yearElement.textContent =
             new Date().getFullYear();
-
     }
 
 
-    /* =====================================================
-       SMOOTH SCROLLING
-    ===================================================== */
+    /* =========================================
+       SMOOTH ANCHOR SCROLLING
+       ========================================= */
 
     const anchorLinks =
-        document.querySelectorAll(
-            'a[href^="#"]'
-        );
+        document.querySelectorAll('a[href^="#"]');
 
     anchorLinks.forEach(function (link) {
 
@@ -113,10 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetId =
                 this.getAttribute("href");
 
-            if (
-                !targetId ||
-                targetId === "#"
-            ) {
+            if (!targetId || targetId === "#") {
                 return;
             }
 
@@ -130,14 +110,10 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
 
             const header =
-                document.querySelector(
-                    ".site-header"
-                );
+                document.querySelector(".site-header");
 
             const headerHeight =
-                header
-                    ? header.offsetHeight
-                    : 0;
+                header ? header.offsetHeight : 0;
 
             const targetPosition =
                 target.getBoundingClientRect().top +
@@ -146,10 +122,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 15;
 
             window.scrollTo({
-
                 top: targetPosition,
-
                 behavior: "smooth"
+            });
+
+        });
+
+    });
+
+
+    /* =========================================
+       FAQ ACCORDION
+       ========================================= */
+
+    const faqItems =
+        document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(function (item) {
+
+        item.addEventListener("toggle", function () {
+
+            if (!item.open) {
+                return;
+            }
+
+            faqItems.forEach(function (otherItem) {
+
+                if (
+                    otherItem !== item &&
+                    otherItem.open
+                ) {
+                    otherItem.open = false;
+                }
 
             });
 
@@ -158,54 +162,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    /* =====================================================
-       FAQ ACCORDION
-    ===================================================== */
-
-    const faqItems =
-        document.querySelectorAll(
-            ".faq-item"
-        );
-
-    faqItems.forEach(function (item) {
-
-        item.addEventListener(
-            "toggle",
-            function () {
-
-                if (!item.open) {
-                    return;
-                }
-
-                faqItems.forEach(
-                    function (otherItem) {
-
-                        if (
-                            otherItem !== item &&
-                            otherItem.open
-                        ) {
-
-                            otherItem.open = false;
-
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-    });
-
-
-    /* =====================================================
+    /* =========================================
        HEADER SCROLL EFFECT
-    ===================================================== */
+       ========================================= */
 
     const header =
-        document.querySelector(
-            ".site-header"
-        );
+        document.querySelector(".site-header");
 
     function updateHeader() {
 
@@ -228,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             header.style.boxShadow =
                 "none";
-
         }
 
     }
@@ -241,34 +202,486 @@ document.addEventListener("DOMContentLoaded", function () {
     updateHeader();
 
 
-    /* =====================================================
-       PHONE DEMO CLICK
-    ===================================================== */
+    /* =========================================
+       CALLSATHI AI DEMO CALL MODAL
+       ========================================= */
 
-    const phoneLinks =
-        document.querySelectorAll(
-            'a[href^="tel:"]'
+    const callModal =
+        document.getElementById("callModal");
+
+    const callModalClose =
+        document.getElementById("callModalClose");
+
+    const demoCallForm =
+        document.getElementById("demoCallForm");
+
+    const demoPhone =
+        document.getElementById("demoPhone");
+
+    const callNowButton =
+        document.getElementById("callNowButton");
+
+    const callButtonText =
+        document.getElementById("callButtonText");
+
+    const demoCallStatus =
+        document.getElementById("demoCallStatus");
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Replace this URL with your Hostinger
+     * PHP endpoint in Step 3.
+     *
+     * Example:
+     *
+     * https://yourdomain.com/api/call-demo.php
+     */
+
+    const CALL_API_URL =
+        "https://YOUR-HOSTINGER-DOMAIN.com/api/call-demo.php";
+
+
+    /* =========================================
+       OPEN MODAL
+       ========================================= */
+
+    function openCallModal(event) {
+
+        if (event) {
+            event.preventDefault();
+        }
+
+        if (!callModal) {
+            return;
+        }
+
+        callModal.classList.add("active");
+
+        callModal.setAttribute(
+            "aria-hidden",
+            "false"
         );
 
-    phoneLinks.forEach(function (link) {
+        document.body.classList.add(
+            "modal-open"
+        );
 
-        link.addEventListener(
-            "click",
-            function () {
+        setTimeout(function () {
 
-                console.log(
-                    "CallSathi AI demo call initiated."
-                );
-
+            if (demoPhone) {
+                demoPhone.focus();
             }
+
+        }, 150);
+
+    }
+
+
+    /* =========================================
+       CLOSE MODAL
+       ========================================= */
+
+    function closeCallModal() {
+
+        if (!callModal) {
+            return;
+        }
+
+        callModal.classList.remove("active");
+
+        callModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.classList.remove(
+            "modal-open"
+        );
+
+    }
+
+
+    /* =========================================
+       DEMO PHONE TRIGGERS
+       ========================================= */
+
+    const demoTriggers =
+        document.querySelectorAll(".demo-trigger");
+
+    demoTriggers.forEach(function (trigger) {
+
+        trigger.addEventListener(
+            "click",
+            openCallModal
         );
 
     });
 
 
-    /* =====================================================
-       SCROLL REVEAL ANIMATION
-    ===================================================== */
+    /* =========================================
+       CLOSE BUTTON
+       ========================================= */
+
+    if (callModalClose) {
+
+        callModalClose.addEventListener(
+            "click",
+            closeCallModal
+        );
+
+    }
+
+
+    /* =========================================
+       CLOSE WHEN CLICKING OUTSIDE MODAL
+       ========================================= */
+
+    if (callModal) {
+
+        callModal.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    event.target === callModal
+                ) {
+                    closeCallModal();
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       CLOSE WITH ESCAPE KEY
+       ========================================= */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                callModal &&
+                callModal.classList.contains("active")
+            ) {
+                closeCallModal();
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       PHONE NUMBER NORMALIZATION
+       ========================================= */
+
+    function normalizePhone(value) {
+
+        if (!value) {
+            return null;
+        }
+
+        let phone =
+            value.trim();
+
+        /*
+         * Remove spaces, brackets,
+         * hyphens and other formatting.
+         */
+
+        phone =
+            phone.replace(
+                /[^\d+]/g,
+                ""
+            );
+
+
+        /*
+         * If exactly 10 digits are entered,
+         * assume Indian mobile number
+         * and add +91.
+         */
+
+        if (
+            /^\d{10}$/.test(phone)
+        ) {
+
+            phone =
+                "+91" + phone;
+
+        }
+
+
+        /*
+         * Accept international E.164 format.
+         *
+         * Example:
+         * +919876543210
+         * +14155552671
+         */
+
+        if (
+            !/^\+[1-9]\d{7,14}$/.test(phone)
+        ) {
+
+            return null;
+
+        }
+
+        return phone;
+
+    }
+
+
+    /* =========================================
+       STATUS MESSAGE
+       ========================================= */
+
+    function showCallStatus(
+        message,
+        type
+    ) {
+
+        if (!demoCallStatus) {
+            return;
+        }
+
+        demoCallStatus.textContent =
+            message;
+
+        demoCallStatus.className =
+            "demo-call-status";
+
+        if (type) {
+            demoCallStatus.classList.add(
+                type
+            );
+        }
+
+    }
+
+
+    /* =========================================
+       SUBMIT DEMO CALL REQUEST
+       ========================================= */
+
+    if (demoCallForm) {
+
+        demoCallForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                /*
+                 * Get visitor phone number
+                 */
+
+                const rawPhone =
+                    demoPhone
+                        ? demoPhone.value
+                        : "";
+
+
+                /*
+                 * Normalize number
+                 */
+
+                const phone =
+                    normalizePhone(
+                        rawPhone
+                    );
+
+
+                /*
+                 * Validate number
+                 */
+
+                if (!phone) {
+
+                    showCallStatus(
+                        "Please enter a valid phone number. Example: +91 9876543210",
+                        "error"
+                    );
+
+                    if (demoPhone) {
+                        demoPhone.focus();
+                    }
+
+                    return;
+                }
+
+
+                /*
+                 * Prevent multiple submissions
+                 */
+
+                if (callNowButton) {
+
+                    callNowButton.disabled =
+                        true;
+
+                }
+
+                if (callButtonText) {
+
+                    callButtonText.textContent =
+                        "Calling you...";
+
+                }
+
+
+                showCallStatus(
+                    "Connecting your call. Please wait...",
+                    "loading"
+                );
+
+
+                try {
+
+                    /*
+                     * Send phone number
+                     * to Hostinger backend.
+                     */
+
+                    const response =
+                        await fetch(
+                            CALL_API_URL,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    phone: phone
+                                })
+                            }
+                        );
+
+
+                    /*
+                     * Read server response
+                     */
+
+                    let result;
+
+                    try {
+
+                        result =
+                            await response.json();
+
+                    } catch (jsonError) {
+
+                        throw new Error(
+                            "Invalid response from server."
+                        );
+
+                    }
+
+
+                    /*
+                     * Handle backend error
+                     */
+
+                    if (
+                        !response.ok ||
+                        !result.success
+                    ) {
+
+                        throw new Error(
+                            result.message ||
+                            "Unable to start the call."
+                        );
+
+                    }
+
+
+                    /*
+                     * SUCCESS
+                     */
+
+                    showCallStatus(
+                        "Your call has been initiated. Please answer the call from +91 8065354620.",
+                        "success"
+                    );
+
+
+                    if (callButtonText) {
+
+                        callButtonText.textContent =
+                            "Call Requested";
+
+                    }
+
+
+                    /*
+                     * Clear phone input
+                     */
+
+                    if (demoPhone) {
+                        demoPhone.value = "";
+                    }
+
+
+                    console.log(
+                        "CallSathi AI call initiated.",
+                        result
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "CallSathi AI call error:",
+                        error
+                    );
+
+
+                    showCallStatus(
+                        error.message ||
+                        "Something went wrong. Please try again.",
+                        "error"
+                    );
+
+
+                    /*
+                     * Re-enable button
+                     */
+
+                    if (callNowButton) {
+
+                        callNowButton.disabled =
+                            false;
+
+                    }
+
+                    if (callButtonText) {
+
+                        callButtonText.textContent =
+                            "Call Me Now";
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       SCROLL REVEAL ANIMATIONS
+       ========================================= */
 
     const revealElements =
         document.querySelectorAll(
@@ -280,7 +693,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-    if ("IntersectionObserver" in window) {
+    if (
+        "IntersectionObserver" in window
+    ) {
 
         const observer =
             new IntersectionObserver(
@@ -319,14 +734,15 @@ document.addEventListener("DOMContentLoaded", function () {
         revealElements.forEach(
             function (element) {
 
-                observer.observe(element);
+                observer.observe(
+                    element
+                );
 
             }
         );
 
-    } else {
 
-        /* Fallback for older browsers */
+    } else {
 
         revealElements.forEach(
             function (element) {
@@ -341,9 +757,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       WEBSITE LOADED
-    ===================================================== */
+    /* =========================================
+       GENERAL PHONE LINK LOG
+       ========================================= */
+
+    const phoneLinks =
+        document.querySelectorAll(
+            'a[href^="tel:"]'
+        );
+
+    phoneLinks.forEach(
+        function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    console.log(
+                        "CallSathi AI demo call initiated."
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =========================================
+       INITIALIZATION MESSAGE
+       ========================================= */
 
     console.log(
         "CallSathi AI website loaded successfully."
