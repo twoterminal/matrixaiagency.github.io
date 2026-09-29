@@ -474,8 +474,8 @@ function normalizePhone(value) {
                 if (!phone) {
 
                     showCallStatus(
-                        "Please enter a valid phone number. Example: +91 9876543210",
-                        "error"
+                       "Please enter a valid 10-digit Indian mobile number.",
+                       "error"
                     );
 
                     if (demoPhone) {
