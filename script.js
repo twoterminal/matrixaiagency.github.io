@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
      */
 
     const CALL_API_URL =
-        "https://YOUR-HOSTINGER-DOMAIN.com/api/call-demo.php";
+        "https://swamisamarthchants.online/api/call-demo.php";
 
 
     /* =========================================
