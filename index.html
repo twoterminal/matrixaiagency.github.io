@@ -1313,15 +1313,22 @@
                 Your phone number
             </label>
 
-            <input
-                type="tel"
-                id="demoPhone"
-                name="phone"
-                inputmode="tel"
-                autocomplete="tel"
-                placeholder="+91 9876543210"
-                required
-            >
+            <div class="phone-input-wrapper">
+                <span class="phone-country-code">+91</span>
+            
+                <input
+                    type="tel"
+                    id="demoPhone"
+                    name="phone"
+                    inputmode="numeric"
+                    autocomplete="tel"
+                    placeholder="9876543210"
+                    maxlength="10"
+                    minlength="10"
+                    pattern="[6-9][0-9]{9}"
+                    required
+                >
+            </div>
 
             <div class="call-modal-hint">
                 Enter your mobile number. Indian 10-digit numbers
