@@ -380,62 +380,30 @@ document.addEventListener("DOMContentLoaded", function () {
        PHONE NUMBER NORMALIZATION
        ========================================= */
 
-    function normalizePhone(value) {
+function normalizePhone(value) {
 
-        if (!value) {
-            return null;
-        }
-
-        let phone =
-            value.trim();
-
-        /*
-         * Remove spaces, brackets,
-         * hyphens and other formatting.
-         */
-
-        phone =
-            phone.replace(
-                /[^\d+]/g,
-                ""
-            );
-
-
-        /*
-         * If exactly 10 digits are entered,
-         * assume Indian mobile number
-         * and add +91.
-         */
-
-        if (
-            /^\d{10}$/.test(phone)
-        ) {
-
-            phone =
-                "+91" + phone;
-
-        }
-
-
-        /*
-         * Accept international E.164 format.
-         *
-         * Example:
-         * +919876543210
-         * +14155552671
-         */
-
-        if (
-            !/^\+[1-9]\d{7,14}$/.test(phone)
-        ) {
-
-            return null;
-
-        }
-
-        return phone;
-
+    if (!value) {
+        return null;
     }
+
+    /*
+     * Keep digits only.
+     */
+    let phone = value.replace(/\D/g, "");
+
+    /*
+     * Indian mobile number must contain
+     * exactly 10 digits.
+     */
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+        return null;
+    }
+
+    /*
+     * Convert to E.164 format.
+     */
+    return "+91" + phone;
+}
 
 
     /* =========================================
