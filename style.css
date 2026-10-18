@@ -27,29 +27,73 @@
 
 .floating-video {
   position: fixed;
-  left: 50%;
   top: 50%;
-  right: auto;
-  bottom: auto;
+  left: 50%;
   transform: translate(-50%, -50%);
-
   width: 360px;
-  max-width: calc(100vw - 32px);
-
+  max-width: calc(100vw - 28px);
+  max-height: calc(100vh - 40px);
   background: #111827;
   border: 1px solid #334155;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
-  z-index: 9999;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  z-index: 99999;
+  box-sizing: border-box;
+}
+
+.floating-video-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  color: #fff;
+  background: #111827;
+  font: 600 15px Arial, sans-serif;
+}
+
+.close-video-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: #374151;
+  color: #fff;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.close-video-btn:hover {
+  background: #dc2626;
+}
+
+.close-video-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .floating-video video {
   display: block;
   width: 100%;
-  max-height: 70vh;
+  max-height: calc(100vh - 100px);
   object-fit: contain;
   background: #000;
+}
+
+@media (max-width: 480px) {
+  .floating-video {
+    width: min(360px, calc(100vw - 28px));
+  }
+
+  .floating-video video {
+    max-height: 70vh;
+  }
 }
 
 
