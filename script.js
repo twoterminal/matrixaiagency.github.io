@@ -69,10 +69,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-function toggleVideo() {
-  document.getElementById('floatingVideo')
-    .classList.toggle('minimized');
-}
+(function () {
+  const widget = document.getElementById("floatingVideo");
+  const closeButton = document.getElementById("closeFloatingVideo");
+  const video = document.getElementById("callSathiVideo");
+
+  if (!widget || !closeButton || !video) return;
+
+  // Close the widget and stop video playback.
+  closeButton.addEventListener("click", function () {
+    video.pause();
+
+    // Stop the media source and release playback resources.
+    video.removeAttribute("src");
+    video.querySelectorAll("source").forEach(function (source) {
+      source.removeAttribute("src");
+    });
+    video.load();
+
+    // Remove the floating video from the page.
+    widget.remove();
+  });
+
+  // Autoplay may be blocked by the browser.
+  // Muted playback is permitted by most modern browsers.
+  const playPromise = video.play();
+
+  if (playPromise && typeof playPromise.catch === "function") {
+    playPromise.catch(function () {
+      // Keep the controls available if autoplay is blocked.
+    });
+  }
+})();
     /* =========================================
        CURRENT YEAR
        ========================================= */
