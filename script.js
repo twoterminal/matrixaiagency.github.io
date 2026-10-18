@@ -69,7 +69,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-
+function toggleVideo() {
+  document.getElementById('floatingVideo')
+    .classList.toggle('minimized');
+}
     /* =========================================
        CURRENT YEAR
        ========================================= */
