@@ -21,7 +21,24 @@
     --radius: 20px;
 }
 
+.hero-video {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
 
+.hero-video video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 520px;
+    object-fit: contain;
+    border-radius: 14px;
+    background: #0b1220;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+}
 /* =========================================================
    RESET
 ========================================================= */
