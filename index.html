@@ -23,7 +23,33 @@
 </head>
 
 <body>
+<!-- CallSathi AI Floating Video -->
+<div id="floatingVideo" class="floating-video" role="dialog" aria-label="CallSathi AI promotional video">
 
+  <div class="floating-video-header">
+    <span>CallSathi AI</span>
+    <button
+      type="button"
+      id="closeFloatingVideo"
+      class="close-video-btn"
+      aria-label="Close video"
+      title="Close video"
+    >&times;</button>
+  </div>
+
+  <video id="callSathiVideo" autoplay muted loop playsinline controls>
+    <source src="callsathi-ad.mp4" type="video/mp4">
+    Your browser does not support video playback.
+  </video>
+
+</div>
+
+
+
+
+
+
+    
 <!-- =========================================================
      HEADER
 ========================================================= -->
@@ -85,19 +111,7 @@
                 Your Business
                 <span>Never Misses a Call.</span>
             </h1>
-<!-- Floating CallSathi AI Video -->
-<div id="floatingVideo" class="floating-video">
-  <div class="floating-video-header">
-    <span>CallSathi AI</span>
-    <button type="button" onclick="toggleVideo()" aria-label="Minimize video">−</button>
-    <button type="button" onclick="closeVideo()" aria-label="Close video">×</button>
-  </div>
 
-  <video autoplay muted loop playsinline controls>
-    <source src="20261018_064027_0000.mp4" type="video/mp4">
-    Your browser does not support video playback.
-  </video>
-</div>
 
             <p class="hero-text">
                 Matrixaiagency answers your business calls 24/7,
